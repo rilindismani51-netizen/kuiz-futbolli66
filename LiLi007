@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuiz Futbolli</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(to right,#11998e,#38ef7d);
+    color:white;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    background:rgba(0,0,0,0.2);
+    font-size:22px;
+    font-weight:bold;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:80vh;
+}
+
+.box{
+    background:white;
+    color:black;
+    width:550px;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+#question{
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+.btn{
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:15px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#11998e;
+    color:white;
+}
+
+.btn:hover{
+    background:#0b6f68;
+}
+
+#result{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+    <div>
+        Përgjigju pyetjeve të futbollit ⚽
+    </div>
+
+    <div id="score">
+        Pikët: 0
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="box">
+
+        <h1>Kuiz Futbolli</h1>
+
+        <div id="question"></div>
+
+        <div id="answers"></div>
+
+        <div id="result"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+const quiz = [
+
+{
+question:"Kush e fitoi Kupën e Botës 2022?",
+answers:["Franca","Argjentina","Brazili","Spanja"],
+correct:"Argjentina"
+},
+
+{
+question:"Cili lojtar ka më shumë Topa të Artë?",
+answers:["Ronaldo","Messi","Neymar","Mbappe"],
+correct:"Messi"
+},
+
+{
+question:"Sa lojtarë ka një ekip futbolli në fushë?",
+answers:["9","10","11","12"],
+correct:"11"
+},
+
+{
+question:"Cili klub quhet 'Mbretërit e Europës'?",
+answers:["Barcelona","Milan","Real Madrid","Liverpool"],
+correct:"Real Madrid"
+},
+
+{
+question:"Në cilin shtet u krijua futbolli?",
+answers:["Francë","Brazil","Angli","Gjermani"],
+correct:"Angli"
+},
+
+{
+question:"Kush njihet si CR7?",
+answers:["Messi","Ronaldinho","Cristiano Ronaldo","Benzema"],
+correct:"Cristiano Ronaldo"
+},
+
+{
+question:"Sa minuta zgjat një ndeshje normale futbolli?",
+answers:["80","90","100","120"],
+correct:"90"
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion(){
+
+    document.getElementById("result").innerHTML = "";
+
+    let q = quiz[currentQuestion];
+
+    document.getElementById("question").innerHTML =
+    q.question;
+
+    let answersHtml = "";
+
+    q.answers.forEach(answer => {
+
+        answersHtml += `
+        <button class="btn"
+        onclick="checkAnswer('${answer}')">
+        ${answer}
+        </button>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML =
+    answersHtml;
+}
+
+function checkAnswer(answer){
+
+    let q = quiz[currentQuestion];
+
+    if(answer === q.correct){
+
+        score++;
+
+        document.getElementById("result").innerHTML =
+        "Saktë ✅";
+
+    } else {
+
+        document.getElementById("result").innerHTML =
+        "Gabim ❌ Përgjigjja ishte: " + q.correct;
+    }
+
+    document.getElementById("score").innerHTML =
+    "Pikët: " + score;
+
+    currentQuestion++;
+
+    if(currentQuestion < quiz.length){
+
+        setTimeout(loadQuestion,1000);
+
+    } else {
+
+        setTimeout(() => {
+
+            document.getElementById("question").innerHTML =
+            "Kuizi përfundoi 🎉";
+
+            document.getElementById("answers").innerHTML =
+            "";
+
+            document.getElementById("result").innerHTML =
+            "Rezultati final: " + score +
+            " / " + quiz.length;
+
+        },1000);
+
+    }
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
